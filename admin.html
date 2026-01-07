@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+</head>
+<body>
+
+  <h1>Admin Panel</h1>
+
+  <p id="adminStatus">Checking admin access...</p>
+
+  <ul>
+    <li>👥 Approve members</li>
+    <li>📢 Post announcements</li>
+    <li>📅 Manage events</li>
+    <li>📂 Upload resources</li>
+  </ul>
+
+  <a href="dashboard.html">← Back to Dashboard</a>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    // 🔐 Firebase config (same as other pages)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyfEhO3Q_eHGRfOMtHnnKzI523Lgz_bhI",
+      authDomain: "computational-linguistic-1b41b.firebaseapp.com",
+      projectId: "computational-linguistic-1b41b",
+      storageBucket: "computational-linguistic-1b41b.firebasestorage.app",
+      messagingSenderId: "408809821572",
+      appId: "1:408809821572:web:33808243519db3e0e4f9d1",
+      measurementId: "G-1Q62E3KX17"
+    };
+
+    // 👑 Admin email list
+    const adminEmails = [
+      "your@email.com"
+    ];
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      if (adminEmails.includes(user.email)) {
+        document.getElementById("adminStatus").innerText =
+          "Welcome Admin: " + user.email;
+      } else {
+        alert("Access denied: Admins only");
+        window.location.href = "dashboard.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
