@@ -8,7 +8,7 @@
 
   <h1>Member Dashboard</h1>
 
-  <p>Welcome! You are logged in as a society member.</p>
+  <p id="welcome">Checking login status...</p>
 
   <ul>
     <li>📄 Access resources</li>
@@ -17,6 +17,38 @@
   </ul>
 
   <a href="index.html">← Back to Home</a>
+
+  <script type="module">
+    // Firebase imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    // 🔐 Firebase config (same as login.html)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyfEhO3Q_eHGRfOMtHnnKzI523Lgz_bhI",
+      authDomain: "computational-linguistic-1b41b.firebaseapp.com",
+      projectId: "computational-linguistic-1b41b",
+      storageBucket: "computational-linguistic-1b41b.firebasestorage.app",
+      messagingSenderId: "408809821572",
+      appId: "1:408809821572:web:33808243519db3e0e4f9d1"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Protect dashboard
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("welcome").innerText =
+          "Welcome, " + user.email;
+      } else {
+        // Not logged in → go to login
+        window.location.href = "login.html";
+      }
+    });
+  </script>
 
 </body>
 </html>
