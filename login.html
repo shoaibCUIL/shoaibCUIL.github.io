@@ -8,56 +8,46 @@
 
   <h2>Member Login</h2>
 
-  <button id="googleLoginBtn">Login with Google</button>
-
+  <button id="loginBtn">Login with Google</button>
   <p id="status"></p>
 
-  <!-- Firebase SDKs -->
   <script type="module">
+    // Import Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } 
-      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      signInWithPopup 
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    // 🔴 PASTE YOUR FIREBASE CONFIG BELOW
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "firebase/app";
-      import { getAnalytics } from "firebase/analytics";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-      
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      const firebaseConfig = {
-        apiKey: "AIzaSyCyfEhO3Q_eHGRfOMtHnnKzI523Lgz_bhI",
-        authDomain: "computational-linguistic-1b41b.firebaseapp.com",
-        projectId: "computational-linguistic-1b41b",
-        storageBucket: "computational-linguistic-1b41b.firebasestorage.app",
-        messagingSenderId: "408809821572",
-        appId: "1:408809821572:web:33808243519db3e0e4f9d1",
-        measurementId: "G-1Q62E3KX17"
-      };
-      
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+    // 🔐 Firebase configuration (PASTE YOUR REAL VALUES)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyfEhO3Q_eHGRfOMtHnnKzI523Lgz_bhI",
+      authDomain: "computational-linguistic-1b41b.firebaseapp.com",
+      projectId: "computational-linguistic-1b41b",
+      storageBucket: "computational-linguistic-1b41b.firebasestorage.app",
+      messagingSenderId: "408809821572",
+      appId: "1:408809821572:web:33808243519db3e0e4f9d1"
+    };
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // Login button click
-    document.getElementById("googleLoginBtn").onclick = () => {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          document.getElementById("status").innerText =
-            "Logged in as: " + result.user.email;
-        })
-        .catch((error) => {
-          document.getElementById("status").innerText =
-            "Error: " + error.message;
-        });
-    };
+    // Login handler
+    const loginBtn = document.getElementById("loginBtn");
+    const status = document.getElementById("status");
+
+    loginBtn.addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        status.innerText = "Logged in as: " + result.user.email;
+      } catch (err) {
+        status.innerText = "ERROR: " + err.message;
+        console.error(err);
+      }
+    });
   </script>
 
 </body>
