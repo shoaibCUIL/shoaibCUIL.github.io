@@ -5,17 +5,33 @@ body {
   padding: 0;
 }
 
-h1, h2 {
-  color: #1f2937;
+nav {
+  background: #1f2937;
+  padding: 12px;
+}
+
+nav a {
+  color: #ffffff;
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 .container {
-  max-width: 800px;
-  margin: 60px auto;
+  max-width: 900px;
+  margin: 40px auto;
   background: #ffffff;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h1, h2 {
+  color: #1f2937;
 }
 
 button {
@@ -32,15 +48,6 @@ button:hover {
   background-color: #1e40af;
 }
 
-a {
-  color: #2563eb;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 ul {
   margin-top: 20px;
 }
@@ -50,6 +57,6 @@ li {
 }
 
 .notice {
+  margin: 12px 0;
   color: #374151;
-  margin-bottom: 15px;
 }
