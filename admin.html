@@ -10,6 +10,8 @@
 
   <p id="adminStatus">Checking admin access...</p>
 
+  <button id="logoutBtn">Logout</button>
+
   <ul>
     <li>👥 Approve members</li>
     <li>📢 Post announcements</li>
@@ -21,28 +23,31 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } 
-      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { 
+      getAuth, 
+      onAuthStateChanged, 
+      signOut 
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    // 🔐 Firebase config (same as other pages)
+    // 🔐 Firebase configuration (SAME as other pages)
     const firebaseConfig = {
-      apiKey: "AIzaSyCyfEhO3Q_eHGRfOMtHnnKzI523Lgz_bhI",
-      authDomain: "computational-linguistic-1b41b.firebaseapp.com",
-      projectId: "computational-linguistic-1b41b",
-      storageBucket: "computational-linguistic-1b41b.firebasestorage.app",
-      messagingSenderId: "408809821572",
-      appId: "1:408809821572:web:33808243519db3e0e4f9d1",
-      measurementId: "G-1Q62E3KX17"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
-    // 👑 Admin email list
+    // 👑 Admin email list (REPLACE with REAL emails)
     const adminEmails = [
-      "shoaibtahirr410@gmail.com"
+      "your@email.com"
     ];
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    // Protect admin page
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.href = "login.html";
@@ -56,6 +61,14 @@
         alert("Access denied: Admins only");
         window.location.href = "dashboard.html";
       }
+    });
+
+    // Logout
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn.addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
     });
   </script>
 
