@@ -2,23 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Member Login</title>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="login.html">Login</a>
+</nav>
+
+<div class="container">
   <h2>Member Login</h2>
 
   <button id="loginBtn">Login with Google</button>
-  <p id="status"></p>
+  <p id="status" class="notice"></p>
+</div>
 
-  <script type="module">
-    // Import Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { 
-      getAuth, 
-      GoogleAuthProvider, 
-      signInWithPopup 
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup } 
+    from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
     // 🔐 Firebase configuration (PASTE YOUR REAL VALUES)
     const firebaseConfig = {
@@ -30,30 +34,26 @@
       appId: "1:408809821572:web:33808243519db3e0e4f9d1"
     };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  // Login handler
-  const loginBtn = document.getElementById("loginBtn");
-  const status = document.getElementById("status");
-
-  loginBtn.addEventListener("click", async () => {
+  document.getElementById("loginBtn").addEventListener("click", async () => {
     try {
       const result = await signInWithPopup(auth, provider);
+      document.getElementById("status").innerText =
+        "Logged in as: " + result.user.email;
 
-      // Show logged-in user
-      status.innerText = "Logged in as: " + result.user.email;
-
-      // ⏩ Redirect to dashboard after login
       setTimeout(() => {
         window.location.href = "dashboard.html";
       }, 1000);
 
     } catch (err) {
-      status.innerText = "ERROR: " + err.message;
-      console.error(err);
+      document.getElementById("status").innerText =
+        "ERROR: " + err.message;
     }
   });
 </script>
+
+</body>
+</html>
